@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Ejemplo Contador Regresivo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.js"></script>
+</head>
+
+<body class="img">
+  <main>
+    <div id="contenido" class="content">
+      <img src="img/Alta.jpg">
+      <div style="display: flex;flex-direction: row;justify-content: center;">
+        <span class="pozoUnidad" id="countdown"></span>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      //===
+      // VARIABLES
+      //===
+      const DATE_TARGET = new Date('08/01/2024 00:30 AM');
+      console.log(DATE_TARGET)
+      // DOM for render
+      const SPAN_COUNTDOWN = document.querySelector('span#countdown');
+      // Milliseconds for the calculations
+      const MILLISECONDS_OF_A_SECOND = 1000;
+      const MILLISECONDS_OF_A_MINUTE = MILLISECONDS_OF_A_SECOND * 60;
+      const MILLISECONDS_OF_A_HOUR = MILLISECONDS_OF_A_MINUTE * 60;
+      const MILLISECONDS_OF_A_DAY = MILLISECONDS_OF_A_HOUR * 24
+
+      //===
+      // FUNCTIONS
+      //===
+
+      /**
+      * Method that updates the countdown and the sample
+      */
+      function updateCountdown() {
+        // Calcs
+        const NOW = new Date();
+        const DURATION = DATE_TARGET - NOW;
+
+        const REMAINING_HOURS = Math.floor((DURATION % MILLISECONDS_OF_A_DAY) / MILLISECONDS_OF_A_HOUR).toString().padStart(2, '0');
+        const REMAINING_MINUTES = Math.floor((DURATION % MILLISECONDS_OF_A_HOUR) / MILLISECONDS_OF_A_MINUTE).toString().padStart(2, '0');
+        const REMAINING_SECONDS = Math.floor((DURATION % MILLISECONDS_OF_A_MINUTE) / MILLISECONDS_OF_A_SECOND).toString().padStart(2, '0');
+
+        // Render
+        SPAN_COUNTDOWN.textContent = `${REMAINING_HOURS}:${REMAINING_MINUTES}:${REMAINING_SECONDS}`;
+      }
+
+      //===
+      // INIT
+      //===
+      updateCountdown();
+      // Refresh every second
+      setInterval(updateCountdown, MILLISECONDS_OF_A_SECOND);
+    });
+  </script>
+</body>
+
+</html>
